@@ -1,0 +1,3 @@
+@model List<ProjectRecord>
+<div class="page-head"><div><p class="eyebrow">İŞLER</p><h1>Projeler</h1><p>Malzeme taleplerini müşteri ve proje bazında düzenleyin.</p></div><a class="btn" href="/Projects/Create">+ Proje ekle</a></div>
+<div class="panel"><table><thead><tr><th>Proje</th><th>Müşteri</th><th>Not</th><th></th></tr></thead><tbody>@foreach (var p in Model) { <tr><td><strong>@p.Name</strong></td><td>@p.Customer</td><td>@p.Notes</td><td><a href="/Requests/Create">Talep oluştur →</a></td></tr> } @if (!Model.Any()) { <tr><td colspan="4" class="empty">Henüz proje eklenmemiş.</td></tr> }</tbody></table></div>

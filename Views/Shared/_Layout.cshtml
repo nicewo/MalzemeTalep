@@ -1,0 +1,3 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>MalzemeTalep</title><link rel="stylesheet" href="~/css/site.css" /></head>
+<body><header><a class="brand" href="/">DATA <span>OTOMASYON</span></a><nav><a href="/Materials">Malzeme Kataloğu</a><a href="/Projects">Projeler</a><a href="/Requests">Talepler</a></nav></header><main>@if (TempData["Message"] != null) { <div class="notice">@TempData["Message"]</div> } @if (TempData["Error"] != null) { <div class="error">@TempData["Error"]</div> } @RenderBody()</main><footer>MalzemeTalep · İlk sürüm</footer></body></html>

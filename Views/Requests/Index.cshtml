@@ -1,0 +1,3 @@
+@model List<MaterialRequest>
+<div class="page-head"><div><p class="eyebrow">SATIN ALMA</p><h1>Malzeme talepleri</h1><p>Geçmiş talepleri açın, kopyalamaya uygun kayıtları bulun ve PDF alın.</p></div><a class="btn" href="/Requests/Create">+ Yeni talep</a></div>
+<div class="panel"><table><thead><tr><th>Talep adı</th><th>Proje</th><th>Tarih</th><th>Kalem</th><th></th></tr></thead><tbody>@foreach (var r in Model) { <tr><td><strong>@r.Title</strong></td><td>@(r.ProjectRecord?.Name ?? "—")</td><td>@r.RequestDate.ToString("dd.MM.yyyy")</td><td>@r.Items.Count</td><td><a href="/Requests/Details/@r.Id">Aç →</a></td></tr> } @if (!Model.Any()) { <tr><td colspan="5" class="empty">Henüz talep yok.</td></tr> }</tbody></table></div>

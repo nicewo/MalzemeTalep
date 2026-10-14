@@ -1,0 +1,7 @@
+@model List<Material>
+<div class="page-head"><div><p class="eyebrow">KÜTÜPHANE</p><h1>Malzeme kataloğu</h1><p>Marka, model, ürün kodu ve açıklama ile ara.</p></div><div class="actions"><a class="btn secondary" href="/Materials/Import">Excel/CSV aktar</a><a class="btn" href="/Materials/Create">+ Malzeme ekle</a></div></div>
+<form method="get" class="search"><input name="q" value="@ViewBag.Query" placeholder="Örn. Siemens, VFD11AMS21AFSAA, sensör..." /><button class="btn">Ara</button></form>
+<div class="panel"><table><thead><tr><th>Marka</th><th>Kategori</th><th>Model / Kod</th><th>Açıklama</th><th>Birim</th><th></th></tr></thead><tbody>
+@foreach (var m in Model) { <tr><td>@m.Brand</td><td>@m.Category</td><td><strong>@m.ModelCode</strong><small>@m.TechnicalSpecs</small></td><td>@m.Description</td><td>@m.Unit</td><td><a href="/Materials/Edit/@m.Id">Düzenle</a></td></tr> }
+@if (!Model.Any()) { <tr><td colspan="6" class="empty">Henüz malzeme yok. İlk malzemeyi ekleyin veya Excel/CSV aktarın.</td></tr> }
+</tbody></table></div>
