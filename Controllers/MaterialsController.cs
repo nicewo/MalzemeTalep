@@ -60,10 +60,12 @@ public class MaterialsController(AppDbContext db) : Controller
             else if (Path.GetExtension(file.FileName).Equals(".csv", StringComparison.OrdinalIgnoreCase))
             {
                 using var reader = new StreamReader(file.OpenReadStream(), Encoding.UTF8, true);
-                while (!reader.EndOfStream)
+                string? line;
+                while ((line = await reader.ReadLineAsync()) is not null)
                 {
-                    var line = await reader.ReadLineAsync() ?? "";
-                    rows.Add(line.Split(';').Length >= line.Split(',').Length ? line.Split(';') : line.Split(','));
+                    var semicolonCells = line.Split(';');
+                    var commaCells = line.Split(',');
+                    rows.Add(semicolonCells.Length >= commaCells.Length ? semicolonCells : commaCells);
                     rows[^1] = rows[^1].Select(x => x.Trim().Trim('"')).ToArray();
                 }
             }
