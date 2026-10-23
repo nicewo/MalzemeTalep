@@ -1,37 +1,75 @@
-# MalzemeTalep — ilk çalışan sürüm
+# MalzemeTalep
 
-ASP.NET Core 10 MVC + EF Core + SQLite tabanlı, internet üzerinden erişilebilen malzeme talep uygulaması başlangıç projesi.
+[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![ASP.NET Core MVC](https://img.shields.io/badge/ASP.NET%20Core-MVC-512BD4?logo=dotnet&logoColor=white)](https://learn.microsoft.com/aspnet/core/)
+[![Database](https://img.shields.io/badge/database-SQLite-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Docker](https://img.shields.io/badge/Docker-supported-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
 
-## İçerik
-- Malzeme kataloğu: marka, kategori, model/kod, açıklama, teknik özellik, birim.
-- Elle malzeme ekleme/düzenleme/silme.
-- XLSX ve CSV toplu malzeme içe aktarma.
-- Proje ve malzeme talebi oluşturma.
-- Talepleri katalogdan seçerek kalem ekleme.
-- Talep detayından PDF çıktısı: mevcut form görünümüne yakın veya modern görünüm.
-- Eski taleplerde ürün adı/kodu/açıklaması/miktar/birim anlık görüntü olarak saklanır.
+ASP.NET Core MVC ile geliştirilen web tabanlı malzeme kataloğu ve talep yönetimi uygulaması. Malzemeleri katalogda tutmayı, proje bazlı talepler oluşturmayı ve talepleri PDF olarak dışa aktarmayı amaçlar.
+
+## Özellikler
+
+- Malzeme kataloğu: marka, kategori, model/kod, açıklama, teknik özellik ve birim
+- Malzeme ekleme, düzenleme ve silme
+- Excel (.xlsx) ve CSV üzerinden toplu içe aktarma
+- Proje kaydı ve proje bazlı malzeme talebi
+- Katalogdan seçilen kalemlerle talep oluşturma
+- Talep detayından Kurumsal veya Modern PDF çıktısı
+- Eski taleplerde ürün bilgilerini ve miktarı kayıt anındaki görüntüsüyle saklama
+- SQLite ile yerel veri saklama
+
+## Teknoloji
+
+- .NET 10 / ASP.NET Core MVC
+- Entity Framework Core
+- SQLite
+- ClosedXML — Excel içe/dışa aktarma altyapısı
+- QuestPDF — PDF üretimi
+- Docker
 
 ## Gereksinimler
-- .NET 10 SDK
-- İlk çalıştırmada NuGet paketlerini indirmek için internet bağlantısı
 
-## Çalıştırma
+- .NET 10 SDK
+- İlk derleme sırasında NuGet paketlerine erişim
+
+## Yerel çalıştırma
+
 ```bash
+git clone https://github.com/nicewo/MalzemeTalep.git
+cd MalzemeTalep
 dotnet restore
 dotnet run
 ```
-Konsolda gösterilen `http://localhost:xxxx` adresini açın. Veritabanı `malzemetalep.db` olarak uygulama klasöründe oluşturulur.
 
-## Toplu aktarım
-Malzemeler > Excel/CSV içe aktar. Excel için `.xlsx`, CSV için UTF-8 veya Windows-1254 uyumlu virgül/noktalı virgül ayrımlı dosya kullanın.
-Sütun başlıkları:
+Konsolda yazdırılan yerel adresi tarayıcıda açın. Varsayılan veritabanı bağlantısı `Data Source=malzemetalep.db` şeklindedir; uygulama veritabanını ilk başlangıçta oluşturur.
+
+## Docker
+
+Proje kök dizininde:
+
+```bash
+docker build -t malzemetalep .
+docker run --rm -p 10000:10000 -v malzemetalep-data:/app malzemetalep
+```
+
+Ardından `http://localhost:10000` adresini açın. Kalıcı veri için kullanılan volume ve veritabanı dosyasının yedeklenmesini doğrulayın.
+
+## Excel/CSV içe aktarma
+
+Kullanılan sütun başlıkları:
+
 `Marka, Kategori, ModelKodu, Aciklama, TeknikOzellik, Birim`
-ModelKodu ve Aciklama alanları zorunludur. Aynı ModelKodu varsa mevcut malzeme güncellenir.
 
-## İnternetten erişim — önemli
-Bu proje ilk çalışan uygulama iskeletidir; doğrudan internete açılmadan önce kimlik doğrulama, kullanıcı/rol yönetimi, HTTPS, güvenli yedekleme ve erişim politikası eklenmelidir. Bu sürümde giriş ekranı yoktur; yalnızca yerel test veya güvenli, kapalı test ortamı için kullanın. Üretimde herkese açık yayınlamayın.
-Önerilen dağıtım: Linux VPS veya Windows Server + HTTPS reverse proxy + kalıcı disk/veritabanı yedeği. Birden fazla eşzamanlı kullanıcı ve yüksek veri hacminde SQLite yerine SQL Server/PostgreSQL değerlendirilebilir.
+- Model kodu ve açıklama alanları zorunludur.
+- Aynı model kodu bulunduğunda mevcut kayıt güncellenir.
+- CSV dosyalarında UTF-8 veya Windows-1254 kodlaması ve virgül/noktalı virgül ayırıcıları kullanılabilir.
 
-## PDF
-QuestPDF Community lisans koşullarını kontrol edin: https://www.questpdf.com/license/
-İlk sürümde iki ayrı çıktı seçeneği sunulur: `Kurumsal` (orijinal talep formunun düzenine yakın) ve `Modern`.
+## Güvenlik ve dağıtım
+
+> **Önemli:** Mevcut sürümde kimlik doğrulama ve kullanıcı/rol yönetimi yoktur. Uygulamayı doğrudan internete açık üretim ortamında yayımlamayın.
+
+İnternetten erişim planlanıyorsa kimlik doğrulama, yetkilendirme, HTTPS, güvenli yedekleme, loglama ve erişim politikaları eklenip test edilmelidir. Hassas veya ticari verileri gerçek kullanıcılarla kullanmadan önce bu kontroller tamamlanmalıdır.
+
+## PDF lisansı
+
+QuestPDF Community lisans koşullarını dağıtım modelinize göre inceleyin: https://www.questpdf.com/license/
